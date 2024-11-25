@@ -1,0 +1,34 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список рецептов</title>
+    <link rel="stylesheet" href="{% static 'myapp/styles.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Список рецептов</h1>
+        <nav>
+            <a href="{% url 'myapp:recipe_form' %}">Добавить рецепт</a>
+            <a href="{% url 'myapp:upload_file' %}">Загрузить файл</a>
+            <a href="{% url 'myapp:download_recipes_xml' %}">Выгрузить список рецептов в XML</a> <!-- Добавленная кнопка -->
+        </nav>
+
+        {% if recipes %}
+            <ul>
+                {% for recipe in recipes %}
+                    <li>
+                        <h2>{{ recipe.name }}</h2>
+                        <p>Ингредиенты: {{ recipe.ingredients }}</p>
+                        <p>Описание: {{ recipe.description }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Нет доступных рецептов.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

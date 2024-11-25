@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Добавить рецепт</title>
+    <link rel="stylesheet" href="{% static 'myapp/styles.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Добавить рецепт</h1>
+        <form action="{% url 'myapp:recipe_form' %}" method="post">
+            {% csrf_token %}
+            {% if form.errors %}
+                <div class="error">
+                    <ul>
+                        {% for field in form %}
+                            {% for error in field.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        {% endfor %}
+                        {% for error in form.non_field_errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+            <label for="name">Название рецепта:</label>
+            {{ form.name }}  <!-- Используем форму Django для отображения полей -->
+            
+            <label for="ingredients">Ингредиенты:</label>
+            {{ form.ingredients }}
+
+            <label for="description">Инструкции:</label>
+            {{ form.description }}
+
+            <button type="submit">Сохранить рецепт</button>
+        </form>
+        <nav>
+            <a href="{% url 'myapp:recipe_list' %}">Список рецептов</a>
+            <a href="{% url 'myapp:upload_file' %}">Загрузить файл</a>
+        </nav>
+    </div>
+</body>
+</html>
